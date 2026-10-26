@@ -10,9 +10,10 @@ class GridCharacters extends StatelessWidget{
   final List<Character> characters;
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return characters.isNotEmpty? GridView.builder(
       itemCount: characters.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (_, index) => GridCharactersItem(charac: characters[index]),);
+      itemBuilder: (_, index) => GridCharactersItem(charac: characters[index]),)
+      : Center(child: Text('Nothing here!'),);
   }
 }

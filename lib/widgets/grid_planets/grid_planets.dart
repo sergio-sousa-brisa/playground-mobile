@@ -10,9 +10,10 @@ class GridPlanets extends StatelessWidget{
   final List<Planet> planets;
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return planets.isNotEmpty? GridView.builder(
       itemCount: planets.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (_, index) => GridPlanetsItem(planet: planets[index]),);
+      itemBuilder: (_, index) => GridPlanetsItem(planet: planets[index]),)
+      : Center(child: Text('Nothing here!'),);
   }
 }
