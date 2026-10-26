@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:playgroundmobile/injection.dart';
+import 'package:playgroundmobile/pages/tabs.dart';
 
-void main() async{
-  runApp(const MainApp());
+final theme = ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color.fromARGB(255, 16, 66, 77),
+    brightness: Brightness.dark,
+  ),
+);
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDependencies();
+  runApp(const App());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class App extends StatelessWidget {
+  const App({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
-    );
+    return MaterialApp(theme: theme, home: const Tabs());
   }
 }
-
-
