@@ -43,4 +43,34 @@ class Planet {
     required this.films,
     required this.residents,
   });
+
+  Planet copyWith({
+    String? name,
+    String? image,
+    String? climate,
+    String? diameter,
+    String? gravity,
+    String? orbitalPeriod,
+    String? population,
+    String? rotationPeriod,
+    String? surfaceWater,
+    String? terrain,
+    List<String>? films,
+    List<String>? residents,
+  }) {
+    return Planet(
+      name: name ?? this.name,
+      image: image ?? this.image,
+      climate: climate ?? this.climate,
+      diameter: diameter ?? this.diameter,
+      gravity: gravity ?? this.gravity,
+      orbitalPeriod: orbitalPeriod ?? this.orbitalPeriod,
+      population: population ?? this.population,
+      rotationPeriod: rotationPeriod ?? this.rotationPeriod,
+      surfaceWater: surfaceWater ?? this.surfaceWater,
+      terrain: terrain ?? this.terrain,
+      films: films ?? this.films,
+      residents: residents ?? this.residents,
+    );
+  }
 }

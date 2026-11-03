@@ -7,20 +7,16 @@ import 'package:playgroundmobile/stores/planet/planet.dart';
 
 final getIt = GetIt.instance;
 
-void setupDependencies() {
-  getIt.registerLazySingleton<ApiService>(() => ApiService());
 
-  getIt.registerLazySingleton<Repository>(
-    () => Repository(getIt<ApiService>()),
-  );
+void setupDependencies(){
+   getIt.registerLazySingleton<ApiService>(() => ApiService());
 
-  getIt.registerLazySingleton<FilmStore>(() => FilmStore(getIt<Repository>()));
+   getIt.registerLazySingleton<Repository>(() => Repository(getIt<ApiService>()));
 
-  getIt.registerLazySingleton<CharacterStore>(
-    () => CharacterStore(getIt<Repository>()),
-  );
+   getIt.registerLazySingleton<FilmStore>(() => FilmStore(getIt<Repository>()));
+   
+   getIt.registerLazySingleton<CharacterStore>(() => CharacterStore(getIt<Repository>()));
+   
+   getIt.registerLazySingleton<PlanetStore>(() => PlanetStore(getIt<Repository>()));
 
-  getIt.registerLazySingleton<PlanetStore>(
-    () => PlanetStore(getIt<Repository>()),
-  );
 }

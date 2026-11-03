@@ -33,15 +33,25 @@ Future<List<Character>> getPeoples() async {
       .toList();
 }
 Future<List<Planet>> getPlanets() async {
-  final data = await _api.getPlanets();
+    final data = await _api.getPlanets();
 
-  final results = data?['results'] as List?;
-  if (results == null) {
-    return [];
-  }
+    final results = data?['results'] as List?;
+    if (results == null) {
+      return [];
+    }
 
-  return results
-      .map((value) => Planet.fromJson(value as Map<String, dynamic>))
-      .toList();
-}
-}
+    List<Planet> planets = results
+        .map((value) => Planet.fromJson(value as Map<String, dynamic>))
+        .toList();
+
+    planets =  await Future.wait(planets.map((planet) async {
+      final imageUrl = await _api.getPlanetImageUrl(planet.name);
+      
+      if (imageUrl.isNotEmpty) {
+        return planet.copyWith(image: imageUrl);
+      }
+      return planet;
+    }));
+
+    return planets;
+}}
