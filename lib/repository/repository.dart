@@ -16,18 +16,19 @@ class Repository {
     return [];
   }
 
-  List<Film> films = results
-      .map((value) => Film.fromJson(value as Map<String, dynamic>))
-      .toList();
-  films = await Future.wait(films.map((film) async {
-    final imageUrl = await _api.getFilmImageUrl(film.title);
-    
-    if(imageUrl.isNotEmpty){
-      return film.copyWith(image: imageUrl);
-    }
-    return film;
-  }).toList());
-  return films;
+  return Future.wait(results
+      .map((item) async { 
+        final film = Film.fromJson(item as Map<String, dynamic>);
+
+        final imageUrl = await _api.getFilmImageUrl(film.title); 
+
+        return film.copyWith(
+          image: imageUrl.isNotEmpty? imageUrl : film.image
+        );
+        
+        
+        }).toList());
+ 
 }
 Future<List<Character>> getCharacters() async {
   final data = await _api.getPeoples();
@@ -51,26 +52,22 @@ Future<List<Character>> getCharacters() async {
 }
 Future<List<Planet>> getPlanets() async {
     final data = await _api.getPlanets();
-
     final results = data?['results'] as List?;
-    if (results == null) {
-      return [];
-    }
 
-    List<Planet> planets = results
-        .map((value) => Planet.fromJson(value as Map<String, dynamic>))
-        .toList();
+    if (results == null) return [];
+ 
+    return Future.wait(results
+        .map((value) async{
+          final planet = Planet.fromJson(value as Map<String, dynamic>);
 
-    planets =  await Future.wait(planets.map((planet) async {
-      final imageUrl = await _api.getPlanetImageUrl(planet.name);
-      
-      if (imageUrl.isNotEmpty) {
-        return planet.copyWith(image: imageUrl);
-      }
-      return planet;
-    }));
+          final imageUrl = await _api.getPlanetImageUrl(planet.name);
 
-    return planets;
+          return planet.copyWith(
+            image: imageUrl.isNotEmpty? imageUrl : planet.image
+          );
+}));
+        
+
 }
 
 
