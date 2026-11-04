@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:playgroundmobile/mock.dart';
+import 'package:flutter/material.dart';
 import 'package:playgroundmobile/services/dio_factory.dart';
 
 class ApiService {
   final _dio = DioFactory.create(baseUrl: 'https://swapi.dev/api');
-  final Map<String, String> _imageUrlCache = {};
+  final Map<String, String> _urlCache = {};
   
   Future<String> getPlanetImageUrl(String planetName) async {
-    if (_imageUrlCache.containsKey(planetName)) {
-      return _imageUrlCache[planetName]!;
+    if (_urlCache.containsKey(planetName)) {
+      return _urlCache[planetName]!;
       }
       
     try {
@@ -17,39 +17,39 @@ class ApiService {
       
       if (data.isNotEmpty) {
         final imageUrl = data[0]['image'] ?? '';
-        _imageUrlCache[planetName] = imageUrl; 
+        _urlCache[planetName] = imageUrl; 
         return imageUrl;
         }
   } catch (e) {
     return '';
   }
 
-  _imageUrlCache[planetName] = '';
+  _urlCache[planetName] = '';
   return '';
 }
 
 Future<String> getFilmImageUrl(String filmName) async {
-    if (_imageUrlCache.containsKey(filmName)) {
-      return _imageUrlCache[filmName]!;
+    if (_urlCache.containsKey(filmName)) {
+      return _urlCache[filmName]!;
       }
       try {
       final response = await _dio.get('https://v3.sg.media-imdb.com/suggestion/r/$filmName.json');
       final Map<String, dynamic> data = response.data;
       if(data.isNotEmpty){
         final imageUrl = data['d'][0]['i']['imageUrl'] ?? '';
-        _imageUrlCache[filmName] = imageUrl; 
+        _urlCache[filmName] = imageUrl; 
       return imageUrl;
       }
       } catch (e){
         return '';      
       }
-  _imageUrlCache[filmName] = '';
+  _urlCache[filmName] = '';
   return '';
 }
 
 Future<String> getPeopleImageUrl(String peopleName) async {
-  if (_imageUrlCache.containsKey(peopleName)) {
-    return _imageUrlCache[peopleName]!;
+  if (_urlCache.containsKey(peopleName)) {
+    return _urlCache[peopleName]!;
   }
 
   final endpoints = [
@@ -66,7 +66,7 @@ Future<String> getPeopleImageUrl(String peopleName) async {
       if (data.isNotEmpty) {
         final String imageUrl = data[0]['image'] ?? '';
         if (imageUrl.isNotEmpty) {
-          _imageUrlCache[peopleName] = imageUrl;
+          _urlCache[peopleName] = imageUrl;
           return imageUrl;
         }
       }
@@ -75,7 +75,7 @@ Future<String> getPeopleImageUrl(String peopleName) async {
     }
   }
 
-  _imageUrlCache[peopleName] = '';
+  _urlCache[peopleName] = '';
   return '';
 }
 
@@ -94,6 +94,27 @@ Future<String> getPeopleImageUrl(String peopleName) async {
     } on DioException catch (_) {
       return null;
     }
+  }
+   Future<String> getPrimarySpeciesName(List<String> speciesUrls) async {
+    if (speciesUrls.isEmpty) return '';
+    final url = speciesUrls.first;
+   
+    if (_urlCache.containsKey(url)){
+      return _urlCache[url]?? '';
+    }
+    try {
+      final response = await _dio.get(url);
+      final Map data = response.data;
+      if (data.isNotEmpty){
+      final species = data['name'] ?? '';
+      _urlCache[url]= species;
+      return species;
+      }       
+    } on DioException catch (_) {
+      return '';
+    }
+    _urlCache[url] = '';
+    return '';
   }
    Future<Map<String, dynamic>?> getPlanets() async {
     try {

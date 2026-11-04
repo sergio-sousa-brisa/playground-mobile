@@ -31,25 +31,23 @@ class Repository {
 }
 Future<List<Character>> getCharacters() async {
   final data = await _api.getPeoples();
-
   final results = data?['results'] as List?;
-  if (results == null) {
-    return [];
-  }
 
-  List<Character> characters = results
-      .map((value) => Character.fromJson(value as Map<String, dynamic>))
-      .toList();
-  characters = await Future.wait(characters.map((character)  async {
-    final imageUrl = await _api.getPeopleImageUrl(character.name);
+  if (results == null || results.isEmpty) return [];
 
-    if (imageUrl.isNotEmpty){
-      return character.copyWith(image: imageUrl);
-          }
+  return Future.wait(
+    results.map((item) async {
+      final character = Character.fromJson(item as Map<String, dynamic>);
 
-    return character;
-  },));
-  return characters;
+      final speciesName = await _api.getPrimarySpeciesName(character.species);
+      final imageUrl = await _api.getPeopleImageUrl(character.name);
+
+      return character.copyWith(
+        species: speciesName.isNotEmpty ? [speciesName] : [],
+        image: imageUrl.isNotEmpty ? imageUrl : character.image,
+      );
+    }),
+  );
 }
 Future<List<Planet>> getPlanets() async {
     final data = await _api.getPlanets();

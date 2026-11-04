@@ -73,7 +73,7 @@ class GridCharactersItem extends StatelessWidget {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black..withValues(alpha: 0.08),
+                          color: Colors.black.withValues(alpha: 0.08), // Corrigido os dois pontos aqui
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
@@ -99,15 +99,29 @@ class GridCharactersItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             if (speciesText.isNotEmpty) ...[
-              const SizedBox(height: 2),
-              Text(
-                speciesText,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+              const SizedBox(height: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.secondaryContainer.withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: theme.colorScheme.secondary.withValues(alpha: 0.15),
+                    width: 1,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                child: Text(
+                  speciesText.toUpperCase(),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.onSecondaryContainer,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                    fontSize: 9,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ],
