@@ -79,8 +79,7 @@ class _TabsState extends State<Tabs> {
             label: 'Characters',
           ),
           NavigationDestination(
-            icon: Icon(Icons.public_outlined),
-            selectedIcon: Icon(Icons.public),
+            icon: Icon(Icons.public),
             label: 'Planets',
           ),
         ],

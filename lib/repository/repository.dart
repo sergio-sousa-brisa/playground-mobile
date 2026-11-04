@@ -16,9 +16,18 @@ class Repository {
     return [];
   }
 
-  return results
+  List<Film> films = results
       .map((value) => Film.fromJson(value as Map<String, dynamic>))
       .toList();
+  films = await Future.wait(films.map((film) async {
+    final imageUrl = await _api.getFilmImageUrl(film.title);
+    
+    if(imageUrl.isNotEmpty){
+      return film.copyWith(image: imageUrl);
+    }
+    return film;
+  }).toList());
+  return films;
 }
 Future<List<Character>> getPeoples() async {
   final data = await _api.getPeoples();
@@ -54,4 +63,7 @@ Future<List<Planet>> getPlanets() async {
     }));
 
     return planets;
-}}
+}
+
+
+}

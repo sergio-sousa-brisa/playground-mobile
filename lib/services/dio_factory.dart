@@ -9,8 +9,6 @@ class DioFactory {
         receiveTimeout: const Duration(seconds: 10),
         headers: headers ?? {'Content-Type': 'application/json'},
       ),
-    )..interceptors.add(
-        LogInterceptor(requestBody: true, responseBody: true),
-      );
+    );
   }
 }

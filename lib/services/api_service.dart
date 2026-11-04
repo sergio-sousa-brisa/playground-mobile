@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:playgroundmobile/mock.dart';
 import 'package:playgroundmobile/services/dio_factory.dart';
 
 class ApiService {
@@ -24,6 +25,25 @@ class ApiService {
   }
 
   _imageUrlCache[planetName] = '';
+  return '';
+}
+
+Future<String> getFilmImageUrl(String filmName) async {
+    if (_imageUrlCache.containsKey(filmName)) {
+      return _imageUrlCache[filmName]!;
+      }
+      try {
+      final response = await _dio.get('https://v3.sg.media-imdb.com/suggestion/r/$filmName.json');
+      final Map<String, dynamic> data = response.data;
+      if(data.isNotEmpty){
+        final imageUrl = data['d'][0]['i']['imageUrl'] ?? '';
+        _imageUrlCache[filmName] = imageUrl; 
+      return imageUrl;
+      }
+      } catch (e){
+        return '';      
+      }
+  _imageUrlCache[filmName] = '';
   return '';
 }
 

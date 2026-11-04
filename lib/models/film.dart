@@ -37,6 +37,34 @@ class Film {
     required this.vehicles,
     required this.characters,
     required this.planets,
-    this.image='',
+    this.image = '',
   });
+
+  Film copyWith({
+    String? title,
+    String? openingCrawl,
+    String? director,
+    String? producer,
+    String? image,
+    DateTime? releaseDate,
+    List<String>? species,
+    List<String>? starships,
+    List<String>? vehicles,
+    List<String>? characters,
+    List<String>? planets,
+  }) {
+    return Film(
+      title: title ?? this.title,
+      openingCrawl: openingCrawl ?? this.openingCrawl,
+      director: director ?? this.director,
+      producer: producer ?? this.producer,
+      image: image ?? this.image,
+      releaseDate: releaseDate ?? this.releaseDate,
+      species: species ?? this.species,
+      starships: starships ?? this.starships,
+      vehicles: vehicles ?? this.vehicles,
+      characters: characters ?? this.characters,
+      planets: planets ?? this.planets,
+    );
+  }
 }
