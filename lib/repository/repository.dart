@@ -29,7 +29,7 @@ class Repository {
   }).toList());
   return films;
 }
-Future<List<Character>> getPeoples() async {
+Future<List<Character>> getCharacters() async {
   final data = await _api.getPeoples();
 
   final results = data?['results'] as List?;
@@ -37,9 +37,19 @@ Future<List<Character>> getPeoples() async {
     return [];
   }
 
-  return results
+  List<Character> characters = results
       .map((value) => Character.fromJson(value as Map<String, dynamic>))
       .toList();
+  characters = await Future.wait(characters.map((character)  async {
+    final imageUrl = await _api.getPeopleImageUrl(character.name);
+
+    if (imageUrl.isNotEmpty){
+      return character.copyWith(image: imageUrl);
+          }
+
+    return character;
+  },));
+  return characters;
 }
 Future<List<Planet>> getPlanets() async {
     final data = await _api.getPlanets();

@@ -23,7 +23,7 @@ abstract class _CharacterStore with Store{
   Future loadCharacters() async{
     try {
       isLoading = true;
-      final response = await _repository.getPeoples();
+      final response = await _repository.getCharacters();
       characters.clear();
       characters.addAll(response);
     } catch (_){

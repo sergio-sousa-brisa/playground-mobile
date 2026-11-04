@@ -47,6 +47,37 @@ Future<String> getFilmImageUrl(String filmName) async {
   return '';
 }
 
+Future<String> getPeopleImageUrl(String peopleName) async {
+  if (_imageUrlCache.containsKey(peopleName)) {
+    return _imageUrlCache[peopleName]!;
+  }
+
+  final endpoints = [
+    'https://starwars-databank-server.onrender.com/api/v1/characters/name/$peopleName',
+    'https://starwars-databank-server.onrender.com/api/v1/creatures/name/$peopleName',
+    'https://starwars-databank-server.onrender.com/api/v1/droids/name/$peopleName',
+  ];
+
+  for (final url in endpoints) {
+    try {
+      final response = await _dio.get(url);
+      final List data = response.data;
+
+      if (data.isNotEmpty) {
+        final String imageUrl = data[0]['image'] ?? '';
+        if (imageUrl.isNotEmpty) {
+          _imageUrlCache[peopleName] = imageUrl;
+          return imageUrl;
+        }
+      }
+    } catch (_) {
+      continue;
+    }
+  }
+
+  _imageUrlCache[peopleName] = '';
+  return '';
+}
 
   Future<Map<String, dynamic>?> getFilms() async {
     try {

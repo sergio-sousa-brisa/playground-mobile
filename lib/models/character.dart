@@ -49,4 +49,38 @@ class Character {
     required this.starships,
     required this.vehicles,
   });
+
+  Character copyWith({
+    String? name,
+    String? image,
+    String? birthYear,
+    String? eyeColor,
+    String? gender,
+    String? hairColor,
+    String? height,
+    String? homeworld,
+    String? mass,
+    String? skinColor,
+    List<String>? films,
+    List<String>? species,
+    List<String>? starships,
+    List<String>? vehicles,
+  }) {
+    return Character(
+      name: name ?? this.name,
+      image: image ?? this.image,
+      birthYear: birthYear ?? this.birthYear,
+      eyeColor: eyeColor ?? this.eyeColor,
+      gender: gender ?? this.gender,
+      hairColor: hairColor ?? this.hairColor,
+      height: height ?? this.height,
+      homeworld: homeworld ?? this.homeworld,
+      mass: mass ?? this.mass,
+      skinColor: skinColor ?? this.skinColor,
+      films: films ?? this.films,
+      species: species ?? this.species,
+      starships: starships ?? this.starships,
+      vehicles: vehicles ?? this.vehicles,
+    );
+  }
 }
