@@ -83,4 +83,23 @@ class Character {
       vehicles: vehicles ?? this.vehicles,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'image': image,
+      'birth_year': birthYear,
+      'eye_color': eyeColor,
+      'gender': gender,
+      'hair_color': hairColor,
+      'height': height,
+      'homeworld': homeworld,
+      'mass': mass,
+      'skin_color': skinColor,
+      'films': films,
+      'species': species,
+      'starships': starships,
+      'vehicles': vehicles,
+    };
+  }
 }

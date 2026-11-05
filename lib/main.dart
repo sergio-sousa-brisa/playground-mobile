@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:playgroundmobile/injection.dart';
+import 'package:playgroundmobile/pages/login.dart';
+import 'package:playgroundmobile/pages/splash.dart';
 import 'package:playgroundmobile/pages/tabs.dart';
 import 'package:playgroundmobile/services/api_service.dart';
+import 'package:playgroundmobile/services/secure_store_service.dart';
 
 final theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
@@ -9,8 +12,6 @@ final theme = ThemeData(
     brightness: Brightness.dark,
   ),
 );
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,15 @@ class App extends StatelessWidget {
   const App({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: theme, home: const Tabs());
+    return MaterialApp(
+      theme: theme, 
+      initialRoute: '/',
+      routes:  {
+        '/':(_) => SplashPage(),
+        '/home': (_)   => Tabs(),
+        '/login':(_) => LoginPage()
+      },
+      debugShowCheckedModeBanner: false,
+      );
   }
 }

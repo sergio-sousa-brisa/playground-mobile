@@ -73,4 +73,21 @@ class Planet {
       residents: residents ?? this.residents,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'image': image,
+      'climate': climate,
+      'diameter': diameter,
+      'gravity': gravity,
+      'orbital_period': orbitalPeriod,
+      'population': population,
+      'rotation_period': rotationPeriod,
+      'surface_water': surfaceWater,
+      'terrain': terrain,
+      'films': films,
+      'residents': residents,
+    };
+  }
 }

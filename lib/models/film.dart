@@ -67,4 +67,20 @@ class Film {
       planets: planets ?? this.planets,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'opening_crawl': openingCrawl,
+      'director': director,
+      'producer': producer,
+      'image': image,
+      'release_date': releaseDate.toIso8601String(),
+      'species': species,
+      'starships': starships,
+      'vehicles': vehicles,
+      'characters': characters,
+      'planets': planets,
+    };
+  }
 }
