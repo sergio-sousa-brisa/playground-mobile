@@ -27,9 +27,9 @@ class App extends StatelessWidget {
       theme: theme, 
       initialRoute: '/',
       routes:  {
-        '/':(_) => SplashPage(),
-        '/home': (_)   => Tabs(),
-        '/login':(_) => LoginPage()
+        '/':(_) => const SplashPage(),
+        '/home': (_)   => const Tabs(),
+        '/login':(_) =>  const LoginPage()
       },
       debugShowCheckedModeBanner: false,
       );

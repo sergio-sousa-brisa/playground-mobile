@@ -1,4 +1,5 @@
 import 'package:playgroundmobile/models/character.dart';
+import 'package:playgroundmobile/models/favorites.dart';
 import 'package:playgroundmobile/models/film.dart';
 import 'package:playgroundmobile/models/planet.dart';
 
@@ -268,3 +269,9 @@ final List<Planet> planets = [
     ],
   ),
 ];
+
+final mockFavorites = FavoritesModel(
+  films: films,
+  characters: characters,
+  planets: planets,
+);

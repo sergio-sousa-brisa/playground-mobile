@@ -3,17 +3,29 @@ import 'package:playgroundmobile/models/planet.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class GridPlanetsItem extends StatelessWidget {
-  const GridPlanetsItem({super.key, required this.planet});
+  const GridPlanetsItem({
+    super.key,
+    required this.planet,
+    this.isFavorite = false,
+    this.onToggleFavorite,
+  });
 
   final Planet planet;
+  final bool isFavorite;
+  final VoidCallback? onToggleFavorite;
 
   String _formatPopulation(String population) {
     final value = int.tryParse(population);
     if (value == null) return population;
-    if (value >= 1000000000)
+    if (value >= 1000000000) {
       return '${(value / 1000000000).toStringAsFixed(1)}B';
-    if (value >= 1000000) return '${(value / 1000000).toStringAsFixed(1)}M';
-    if (value >= 1000) return '${(value / 1000).toStringAsFixed(1)}K';
+    }
+    if (value >= 1000000) {
+      return '${(value / 1000000).toStringAsFixed(1)}M';
+    }
+    if (value >= 1000) {
+      return '${(value / 1000).toStringAsFixed(1)}K';
+    }
     return population;
   }
 
@@ -22,14 +34,12 @@ class GridPlanetsItem extends StatelessWidget {
     final mainTerrain = planet.terrain.split(',').first.trim();
 
     return Card(
-      elevation: 2, // Leve sombra para destacar do fundo da tela
+      elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      clipBehavior: Clip
-          .antiAlias, // Fundamental para o Stack respeitar as bordas do Card
+      clipBehavior: Clip.antiAlias,
       child: Stack(
-        fit: StackFit.expand, // Faz a imagem preencher todo o Card
+        fit: StackFit.expand,
         children: [
-          // 1. Imagem de Fundo
           FadeInImage.memoryNetwork(
             placeholder: kTransparentImage,
             image: planet.image,
@@ -43,8 +53,6 @@ class GridPlanetsItem extends StatelessWidget {
               ),
             ),
           ),
-
-          // 2. Gradiente escuro para dar leitura aos textos
           Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
@@ -52,17 +60,11 @@ class GridPlanetsItem extends StatelessWidget {
                   colors: [Colors.transparent, Colors.black54, Colors.black87],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [
-                    0.4,
-                    0.75,
-                    1.0,
-                  ], // Controla onde o escurecimento começa
+                  stops: [0.4, 0.75, 1.0],
                 ),
               ),
             ),
           ),
-
-          // 3. Textos e Ícones por cima do gradiente
           Positioned(
             bottom: 12,
             left: 12,
@@ -127,6 +129,29 @@ class GridPlanetsItem extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.4),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                iconSize: 20,
+                constraints: const BoxConstraints(
+                  minWidth: 32,
+                  minHeight: 32,
+                ),
+                padding: EdgeInsets.zero,
+                icon: Icon(
+                  isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                  color: isFavorite ? Colors.red : Colors.white,
+                ),
+                onPressed: onToggleFavorite,
+              ),
             ),
           ),
         ],

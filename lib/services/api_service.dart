@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:playgroundmobile/services/dio_factory.dart';
 
 class ApiService {

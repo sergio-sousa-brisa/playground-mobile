@@ -7,7 +7,7 @@ class SecureStoreService {
     )
   );
 
-  Future white(String key, String value) => _storage.write(key: key, value: value);
+  Future write(String key, String value) => _storage.write(key: key, value: value);
   Future<String?> read(String key) => _storage.read(key: key);
   Future delete(String key) => _storage.delete(key: key);
   Future clearAll() => _storage.deleteAll();

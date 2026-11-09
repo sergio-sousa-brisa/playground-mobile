@@ -18,7 +18,7 @@ class AuthRepository {
     final existingUser = await  _storage.read(key);
     if (existingUser!=null) return false;
 
-    await _storage.white(key, jsonEncode(user.toMap()));
+    await _storage.write(key, jsonEncode(user.toMap()));
     return true;
 }
 
@@ -31,7 +31,7 @@ class AuthRepository {
     final user =  User.fromMap(jsonDecode(rawData));
 
     if (user.password == password){
-      await _storage.white(_sessionKey, user.name);
+      await _storage.write(_sessionKey, user.name);
       return true;
     }
     return false;
