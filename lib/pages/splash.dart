@@ -29,11 +29,6 @@ class _SplashPageState extends State<SplashPage> {
         '/home',
         (_) => false,
       );
-      (
-        context, 
-      '/home',
-
-      );
     } else {
       Navigator.pushReplacementNamed(context, '/login');
     }
