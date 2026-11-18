@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:playgroundmobile/app_routes.dart';
 import 'package:playgroundmobile/injection.dart';
 import 'package:playgroundmobile/stores/auth/auth_store.dart';
 
@@ -24,13 +25,9 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) return;
 
     if (_authStore.isAuthenticated) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/home',
-        (_) => false,
-      );
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
     } else {
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
     }
   }
 

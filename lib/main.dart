@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:playgroundmobile/app_routes.dart';
 import 'package:playgroundmobile/injection.dart';
 import 'package:playgroundmobile/pages/login.dart';
 import 'package:playgroundmobile/pages/splash.dart';
@@ -24,14 +25,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: theme, 
-      initialRoute: '/',
-      routes:  {
-        '/':(_) => const SplashPage(),
-        '/home': (_)   => const Tabs(),
-        '/login':(_) =>  const LoginPage()
+      theme: theme,
+      initialRoute: AppRoutes.splash,
+      routes: {
+        AppRoutes.splash: (_) => const SplashPage(),
+        AppRoutes.home: (_) => const Tabs(),
+        AppRoutes.login: (_) => const LoginPage(),
       },
       debugShowCheckedModeBanner: false,
-      );
+    );
   }
 }

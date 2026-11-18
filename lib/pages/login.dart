@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:playgroundmobile/app_routes.dart';
 import 'package:playgroundmobile/injection.dart';
 import 'package:playgroundmobile/stores/auth/auth_store.dart';
 
@@ -14,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _userController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   final _authStore = getIt<AuthStore>();
 
   bool _obscurePassword = true;
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (success && mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
       }
     }
   }
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       if (success && mounted) {
         Navigator.restorablePushNamedAndRemoveUntil(
           context, 
-          '/home',
+          AppRoutes.home,
           (route) => false,
         );
       }

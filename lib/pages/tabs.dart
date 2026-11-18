@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:playgroundmobile/app_routes.dart';
 import 'package:playgroundmobile/injection.dart';
 import 'package:playgroundmobile/pages/favorites.dart';
 import 'package:playgroundmobile/pages/search.dart';
@@ -48,11 +49,7 @@ class _TabsState extends State<Tabs> {
 
   void logout() {
     authStore.logout();
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      '/login',
-      (_) => false,
-    );
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
   }
 
   @override
